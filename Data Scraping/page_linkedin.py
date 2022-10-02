@@ -11,16 +11,30 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from wordcloud import WordCloud, STOPWORDS
 
+#env file mangment libraries
+from dotenv import load_dotenv
+import os
+
 options = webdriver.ChromeOptions()
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
 browser=webdriver.Chrome("C:\\Users\\USER\\Documents\\chromedriver_win32\\chromedriver.exe",options=options)
 browser.get("https://www.linkedin.com")
 
+#Load dotenv library
+load_dotenv()
+env_path='/YOUR_PATH/ENV_FILE_NME.env'
+load_dotenv(dotenv_path=env_path)
+
+#Getting Username and Password from .env file
+USER=os.getenv('USER')
+PASSWORD=os.getenv('PASSWORD')
+
+
 username=browser.find_element_by_id("session_key")
-username.send_keys("rasheedarasool@gmail.com")
+username.send_keys(USER)
 password=browser.find_element_by_id("session_password")
-password.send_keys("sappillai")
+password.send_keys(PASSWORD)
 
 login_button=browser.find_element_by_class_name("sign-in-form__submit-button")
 login_button.click()
